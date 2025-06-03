@@ -26,11 +26,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/universities.js"
-    ],
-    "/universities/form": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/universities/form.js"
     ]
   },
   "ampFirstPages": []

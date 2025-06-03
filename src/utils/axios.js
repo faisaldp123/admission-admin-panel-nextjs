@@ -3,9 +3,9 @@ import Cookies from 'js-cookie';
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true, // ✅ This is required for cross-origin cookies
   headers: {
     'Content-Type': 'application/json',
-    // 'Authorization': `Bearer ${Cookies.get("access_token") || ''}`,
   },
 });
 
@@ -17,27 +17,17 @@ axiosInstance.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Optional: Token refresh logic
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Optional: only enable this if refresh token logic is implemented
     if (error.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
-
-      // const access_token = await refreshAccessToken(); 
-      // Cookies.set("access_token", access_token);
-      // axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-      // return axiosInstance(originalRequest);
-
-      // If no refresh logic yet, redirect or logout here
+      // Optionally handle token refresh
     }
 
     return Promise.reject(error);
