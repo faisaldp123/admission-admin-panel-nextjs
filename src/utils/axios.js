@@ -2,10 +2,10 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8801/',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${Cookies.get("access_token") || ''}`,
+    // 'Authorization': `Bearer ${Cookies.get("access_token") || ''}`,
   },
 });
 
