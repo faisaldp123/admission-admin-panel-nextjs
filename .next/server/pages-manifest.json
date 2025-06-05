@@ -4,5 +4,7 @@
   "/_document": "pages/_document.js",
   "/universities": "pages/universities.js",
   "/login": "pages/login.js",
+  "/universities/form": "pages/universities/form.js",
+  "/register": "pages/register.js",
   "/": "pages/index.js"
 }
