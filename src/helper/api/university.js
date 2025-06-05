@@ -2,7 +2,7 @@ import axiosInstance from '@/utils/axios.js';
 
 export const addUniversity = async (credentials) => {
   try {
-    const response = await axiosInstance.post("http://localhost:3000/universities", credentials);
+    const response = await axiosInstance.post("/universities", credentials);
     return response.data; // This contains the token, user info, etc.
   } catch (error) {
     // Optional: log the actual error for debugging
@@ -17,7 +17,7 @@ export const addUniversity = async (credentials) => {
 
 export const getUniversities = async (params = {}) => {
     try {
-      const response = await axiosInstance.get("http://localhost:3000/universities", {
+      const response = await axiosInstance.get("/universities", {
         params: params
       });
       return response.data;
@@ -28,7 +28,7 @@ export const getUniversities = async (params = {}) => {
   };
 
   export const updateUniversityById = async (id, formData) => {
-    const response = await fetch(`http://localhost:3000/universities/${id}`, {
+    const response = await fetch(`/universities/${id}`, {
       method: 'PUT',
       body: formData, // send as-is
       // ❌ DO NOT SET HEADERS HERE — browser sets correct 'Content-Type' for FormData
@@ -42,7 +42,7 @@ export const getUniversities = async (params = {}) => {
   };
 
   export const deleteUniversityById = async (id) => {
-    const res = await axiosInstance.delete(`http://localhost:3000/universities/${id}`);
+    const res = await axiosInstance.delete(`/universities/${id}`);
     return res.data;
   };
   
