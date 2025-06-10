@@ -37,7 +37,7 @@ export default function AddUniversityForm() {
 
     try {
       setUploading(true);
-      await axios.post('https://admission-panel-admin-backend.onrender.com/universities', formData, {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/universities`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       alert('University added successfully!');
