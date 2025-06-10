@@ -150,7 +150,7 @@ export default function AddUniversityForm() {
           fullWidth
           disabled={uploading}
         >
-          {uploading ? 'Saving...' : 'Add University'}
+          {uploading ? 'Saving...' : 'Please Add University'}
         </Button>
       </form>
     </Container>
