@@ -1,3 +1,5 @@
+// utils/axios.js
+
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
@@ -5,39 +7,38 @@ const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${Cookies.get("access_token") || ''}`,
   },
 });
 
+// ✅ Attach Authorization header dynamically via request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = Cookies.get("access_token");
+    const token = Cookies.get('access_token');
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Optional: Token refresh logic
+// ✅ Optional response interceptor for token refresh (currently disabled)
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Optional: only enable this if refresh token logic is implemented
+    // Optional logic for token refresh or re-authentication
     if (error.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      // const access_token = await refreshAccessToken(); 
-      // Cookies.set("access_token", access_token);
-      // axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+      // If you implement token refresh logic in future, add it here:
+      // const newAccessToken = await refreshAccessToken();
+      // Cookies.set("access_token", newAccessToken);
+      // originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
       // return axiosInstance(originalRequest);
 
-      // If no refresh logic yet, redirect or logout here
+      // Right now, you might want to redirect to login or show error
     }
 
     return Promise.reject(error);
