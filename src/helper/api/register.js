@@ -2,7 +2,7 @@ import axiosInstance from '@/utils/axios.js';
 
 export const registerUser = async (credentials) => {
   try {
-    const response = await axiosInstance.post("/auth/register", credentials);
+    const response = await axiosInstance.post("/api/auth/register", credentials);
     return response.data; // This contains the token, user info, etc.
   } catch (error) {
     // Optional: log the actual error for debugging
