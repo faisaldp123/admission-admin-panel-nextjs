@@ -1,8 +1,9 @@
 import axiosInstance from '@/utils/axios.js';
+const baseURL = process.env.NEXT_PUBLIC_API_URL; // Always use env var
 
 export const addUniversity = async (credentials) => {
   try {
-    const response = await axiosInstance.post("/universities", credentials);
+    const response = await axiosInstance.post(`${baseURL}/universities`, credentials);
     return response.data; // This contains the token, user info, etc.
   } catch (error) {
     // Optional: log the actual error for debugging
@@ -17,7 +18,7 @@ export const addUniversity = async (credentials) => {
 
 export const getUniversities = async (params = {}) => {
     try {
-      const response = await axiosInstance.get("/universities", {
+      const response = await axiosInstance.get(`${baseURL}/universities`, {
         params: params
       });
       return response.data;
@@ -28,7 +29,7 @@ export const getUniversities = async (params = {}) => {
   };
 
   export const updateUniversityById = async (id, formData) => {
-    const response = await fetch(`/universities/${id}`, {
+    const response = await fetch(`${baseURL}/universities/${id}`, {
       method: 'PUT',
       body: formData, // send as-is
       // ❌ DO NOT SET HEADERS HERE — browser sets correct 'Content-Type' for FormData
@@ -42,7 +43,7 @@ export const getUniversities = async (params = {}) => {
   };
 
   export const deleteUniversityById = async (id) => {
-    const res = await axiosInstance.delete(`/universities/${id}`);
+    const res = await axiosInstance.delete(`${baseURL}/universities/${id}`);
     return res.data;
   };
   
