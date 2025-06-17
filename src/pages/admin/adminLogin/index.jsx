@@ -15,8 +15,8 @@ export default function AdminLoginPage() {
     try {
       const res = await axios.post(
   `${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`,
-  { password },
-  { withCredentials: true } // ✅ VERY IMPORTANT
+  { email, password },
+  { withCredentials: true } // ✅ this is crucial
 );
 
       if (res.data.success) {
