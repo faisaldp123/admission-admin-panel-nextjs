@@ -19,23 +19,22 @@ import UniversityFormModal from '@/components/university/UniversityFormModal';
 import axiosInstance from '@/utils/axios';
 
 
-export const getServerSideProps = async (ctx) => {
-  const { req } = ctx;
 
-  const cookie = req.headers.cookie || '';
+export const getServerSideProps = async (ctx) => {
+  const cookie = ctx.req.headers.cookie || '';
 
   try {
-    const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-admin-session`, {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-admin-session`, {
       headers: {
-        Cookie: cookie, // 👈 Send browser cookies to backend
+        Cookie: cookie, // ✅ Pass admin_token cookie to backend
       },
     });
 
-    if (response.status === 200) {
+    if (res.status === 200) {
       return { props: {} };
     }
-  } catch (err) {
-    console.error('Admin session check failed:', err?.response?.data || err.message);
+  } catch (error) {
+    console.error('Auth failed:', error.response?.data || error.message);
   }
 
   return {
