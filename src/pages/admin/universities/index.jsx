@@ -1,4 +1,3 @@
-import AdminLayout from '@/components/AdminLayout'; // wrap in layout
 import { useState, useEffect } from 'react';
 import {
   Card,
@@ -17,9 +16,7 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { getUniversities, deleteUniversityById } from '@/helper/api/university';
 import UniversityFormModal from '@/components/university/UniversityFormModal';
-import { useRouter } from 'next/router';
 
-// ✅ Add getServerSideProps
 export const getServerSideProps = async (ctx) => {
   const token = ctx.req.cookies.admin_token;
 
@@ -130,7 +127,7 @@ const Universities = () => {
   };
 
   return (
-    <AdminLayout>
+    <>
       <div className="flex justify-between align-middle mb-5">
         <h2 className="text-3xl">Universities ({universities.length})</h2>
         <Button variant="outlined" color="success">
@@ -212,7 +209,7 @@ const Universities = () => {
           <UniversityFormModal form={form} selectedUniversity={selectedUniversity} onClose={handleCloseModal} />
         </Box>
       </Modal>
-    </AdminLayout>
+    </>
   );
 };
 
