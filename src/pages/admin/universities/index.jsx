@@ -16,25 +16,34 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { getUniversities, deleteUniversityById } from '@/helper/api/university';
 import UniversityFormModal from '@/components/university/UniversityFormModal';
+import axiosInstance from '@/utils/axios';
+
 
 export const getServerSideProps = async (ctx) => {
-  const res = await fetch('https://admission-panel-admin-backend.onrender.com/api/check-admin-session', {
-    headers: {
-      cookie: ctx.req.headers.cookie || '',
-    },
-    credentials: 'include',
-  });
+  const { req } = ctx;
 
-  if (res.status !== 200) {
-    return {
-      redirect: {
-        destination: '/admin/adminLogin',
-        permanent: false,
+  const cookie = req.headers.cookie || '';
+
+  try {
+    const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-admin-session`, {
+      headers: {
+        Cookie: cookie, // 👈 Send browser cookies to backend
       },
-    };
+    });
+
+    if (response.status === 200) {
+      return { props: {} };
+    }
+  } catch (err) {
+    console.error('Admin session check failed:', err?.response?.data || err.message);
   }
 
-  return { props: {} };
+  return {
+    redirect: {
+      destination: '/admin/adminLogin',
+      permanent: false,
+    },
+  };
 };
 
 const Universities = () => {
