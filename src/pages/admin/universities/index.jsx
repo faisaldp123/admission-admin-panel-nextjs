@@ -18,9 +18,14 @@ import { getUniversities, deleteUniversityById } from '@/helper/api/university';
 import UniversityFormModal from '@/components/university/UniversityFormModal';
 
 export const getServerSideProps = async (ctx) => {
-  const token = ctx.req.cookies.admin_token;
+  const res = await fetch('https://admission-panel-admin-backend.onrender.com/api/check-admin-session', {
+    headers: {
+      cookie: ctx.req.headers.cookie || '',
+    },
+    credentials: 'include',
+  });
 
-  if (!token || token !== 'your-secret') {
+  if (res.status !== 200) {
     return {
       redirect: {
         destination: '/admin/adminLogin',
