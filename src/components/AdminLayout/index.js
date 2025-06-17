@@ -9,28 +9,31 @@ const AdminLayout = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const checkAuth = async () => {
-  try {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-auth`,
-      { withCredentials: true } // ✅ MUST BE HERE
-    );
-    if (res.data.success) {
-      setIsLoggedIn(true);
-    } else {
+  const checkAuth = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-auth`,
+        { withCredentials: true }
+      );
+      if (res.data.success) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+        router.replace('/admin/adminLogin');
+      }
+    } catch (err) {
+      setIsLoggedIn(false);
       router.replace('/admin/adminLogin');
+    } finally {
+      setIsChecking(false);
     }
-  } catch (err) {
-    router.replace('/admin/adminLogin');
-  } finally {
-    setIsChecking(false);
-  }
-};
+  };
 
-    checkAuth();
-  }, [router]);
+  checkAuth();
+}, []);
 
-  if (isChecking || !isLoggedIn) return null;
+if (isChecking) return null;
+if (!isLoggedIn) return <p>Redirecting...</p>;
   return (
     <div className="flex min-h-screen">
       <aside className="w-64 bg-gray-800 text-white p-4">

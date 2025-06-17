@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import AdminLayout from '@/components/AdminLayout';
 
 const AdminDashboard = () => {
   const router = useRouter();
@@ -12,9 +13,11 @@ const AdminDashboard = () => {
   }, [router]); // ← important to include router in dependency
 
   return (
-    <div>
+    <AdminLayout>
+        <div>
       <h2>Welcome to Admin Dashboard</h2>
     </div>
+    </AdminLayout>
   );
 };
 
