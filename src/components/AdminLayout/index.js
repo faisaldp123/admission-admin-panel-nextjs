@@ -8,29 +8,17 @@ const AdminLayout = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-  const checkAuth = async () => {
-    try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-auth`,
-        { withCredentials: true }
-      );
-      if (res.data.success) {
-        setIsLoggedIn(true);
-      } else {
-        setIsLoggedIn(false);
-        router.replace('/admin/adminLogin');
-      }
-    } catch (err) {
-      setIsLoggedIn(false);
-      router.replace('/admin/adminLogin');
-    } finally {
-      setIsChecking(false);
-    }
-  };
+ exports.checkAdminAuth = (req, res) => {
+  const token = req.cookies.admin_token;
+  if (!token) return res.status(401).json({ success: false });
 
-  checkAuth();
-}, []);
+  try {
+    jwt.verify(token, process.env.JWT_SECRET);
+    return res.json({ success: true });
+  } catch (err) {
+    return res.status(401).json({ success: false });
+  }
+};
 
 if (isChecking) return null;
 if (!isLoggedIn) return <p>Redirecting...</p>;
