@@ -19,17 +19,19 @@ import UniversityFormModal from '@/components/university/UniversityFormModal';
 
 
 
+
 export const getServerSideProps = async (ctx) => {
   const cookie = ctx.req.headers.cookie || '';
 
   try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-admin-session`, {
+    const res = await axios.get(`${process.env.API_URL}/api/admin/check-admin-session`, {
       headers: {
         Cookie: cookie,
       },
+      withCredentials: true, // ✅ important for cookie-based auth
     });
 
-    if (res.status === 200) {
+    if (res.status === 200 && res.data.success) {
       return { props: {} };
     }
   } catch (error) {
