@@ -8,20 +8,36 @@ const AdminLayout = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
- exports.checkAdminAuth = (req, res) => {
-  const token = req.cookies.admin_token;
-  if (!token) return res.status(401).json({ success: false });
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-admin-session`, {
+          withCredentials: true,
+        });
 
-  try {
-    jwt.verify(token, process.env.JWT_SECRET);
-    return res.json({ success: true });
-  } catch (err) {
-    return res.status(401).json({ success: false });
+        if (res.status === 200 && res.data.success) {
+          setIsLoggedIn(true);
+        } else {
+          router.replace('/admin/adminLogin');
+        }
+      } catch (err) {
+        router.replace('/admin/adminLogin');
+      } finally {
+        setIsChecking(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  if (isChecking) {
+    return <div className="p-6 text-lg">Checking authentication...</div>;
   }
-};
 
-if (isChecking) return null;
-if (!isLoggedIn) return <p>Redirecting...</p>;
+  if (!isLoggedIn) {
+    return null; // Let router.replace redirect
+  }
+
   return (
     <div className="flex min-h-screen">
       <aside className="w-64 bg-gray-800 text-white p-4">
@@ -40,7 +56,7 @@ if (!isLoggedIn) return <p>Redirecting...</p>;
         <button
           onClick={async () => {
             await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/logout`, {}, { withCredentials: true });
-            router.push('/admin/adminLogin');
+            router.replace('/admin/adminLogin');
           }}
           className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded"
         >

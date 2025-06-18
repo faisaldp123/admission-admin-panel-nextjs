@@ -21,7 +21,7 @@ export default function AdminLoginPage() {
       );
 
       if (res.data.success) {
-        router.push('/admin/dashboard');
+        router.push('/admin/universities');
       } else {
         setError('Invalid credentials');
       }
