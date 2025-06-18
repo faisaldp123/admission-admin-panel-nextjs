@@ -16,7 +16,6 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { getUniversities, deleteUniversityById } from '@/helper/api/university';
 import UniversityFormModal from '@/components/university/UniversityFormModal';
-import axiosInstance from '@/utils/axios';
 
 
 
@@ -26,7 +25,7 @@ export const getServerSideProps = async (ctx) => {
   try {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-admin-session`, {
       headers: {
-        Cookie: cookie, // ✅ Pass admin_token cookie to backend
+        Cookie: cookie,
       },
     });
 
