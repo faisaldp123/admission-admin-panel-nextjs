@@ -30,13 +30,8 @@ const AdminLayout = ({ children }) => {
     checkAuth();
   }, []);
 
-  if (isChecking) {
-    return <div className="p-6 text-lg">Checking authentication...</div>;
-  }
-
-  if (!isLoggedIn) {
-    return null; // Let router.replace redirect
-  }
+  if (isChecking) return <p>Checking authentication...</p>;
+  if (!isLoggedIn) return null;
 
   return (
     <div className="flex min-h-screen">
@@ -63,7 +58,6 @@ const AdminLayout = ({ children }) => {
           Logout
         </button>
       </aside>
-
       <main className="flex-1 p-4">{children}</main>
     </div>
   );
