@@ -14,16 +14,7 @@ export default function AdminLoginPage() {
 
     setLoading(true);
     try {
-      await axios.post(
-  `${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`,
-  {
-    email,
-    password,
-  },
-  {
-    withCredentials: true, // REQUIRED
-  }
-);
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`, { email, password,}, {  withCredentials: true, });
 
       if (res.data.success) {
         router.push('/admin/universities');
