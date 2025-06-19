@@ -14,9 +14,11 @@ export default function AdminLoginPage() {
 
     setLoading(true);
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`, { email, password,}, {  withCredentials: true, });
+      const apiRessponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`, { email, password,}, {  withCredentials: true, });
+      console.log("new api response", apiRessponse)
 
-      if (res.data.success) {
+      if (apiRessponse.data.success) {
+        console.log('pushing to universites page')
         router.push('/admin/universities');
       } else {
         setError('Invalid credentials');
