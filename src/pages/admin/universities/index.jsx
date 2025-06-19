@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { getUniversities, deleteUniversityById } from '@/helper/api/university';
 import UniversityFormModal from '@/components/university/UniversityFormModal';
+import axios from 'axios';
 
 
 
@@ -24,11 +25,11 @@ export const getServerSideProps = async (ctx) => {
   const cookie = ctx.req.headers.cookie || '';
 
   try {
-    const res = await axios.get(`${process.env.API_URL}/api/admin/check-admin-session`, {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-admin-session`, {
       headers: {
-        Cookie: cookie,
+        Cookie: cookie, // ✅ send cookie manually
       },
-      withCredentials: true, // ✅ important for cookie-based auth
+      withCredentials: true, // ✅ needed to support auth cookies
     });
 
     if (res.status === 200 && res.data.success) {
@@ -47,6 +48,7 @@ export const getServerSideProps = async (ctx) => {
 };
 
 const Universities = () => {
+  console.log('university page loading..')
   const [modal, setModal] = useState(false);
   const [filter, setFilter] = useState({ page: 1, pageSize: 10 });
   const { page, pageSize } = filter;
