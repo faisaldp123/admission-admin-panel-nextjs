@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Link from 'next/link';
@@ -51,15 +52,25 @@ const AdminLayout = ({ children }) => {
         <button
   onClick={async () => {
     try {
-      console.log("Logging out...");
+      // Backend logout: clears HttpOnly cookies
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/admin/logout`,
         {},
-        { withCredentials: true } // Important to clear the HttpOnly cookie
+        { withCredentials: true }
       );
+
+      // Remove frontend cookies manually
+      Cookies.remove('access_token', { path: '' });
+      Cookies.remove('role', { path: '' });
+
+      // Optional: clear localStorage/sessionStorage if used
+      localStorage.clear();
+      sessionStorage.clear();
+
+      // Now redirect
       router.replace('/admin/adminLogin');
     } catch (err) {
-      console.error("Logout failed", err);
+      console.error("Logout failed:", err);
     }
   }}
   className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded"
