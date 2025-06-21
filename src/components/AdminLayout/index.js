@@ -14,8 +14,8 @@ const AdminLayout = ({ children }) => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-admin-session`, {
           withCredentials: true,
         });
-
-        if (res.status === 200 && res.data.success) {
+        console.log(res)
+        if (res.status === 200 && res.data.message === "Authenticated") {
           setIsLoggedIn(true);
         } else {
           router.replace('/admin/adminLogin');
@@ -49,14 +49,23 @@ const AdminLayout = ({ children }) => {
           </li>
         </ul>
         <button
-          onClick={async () => {
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/logout`, {}, { withCredentials: true });
-            router.replace('/admin/adminLogin');
-          }}
-          className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded"
-        >
-          Logout
-        </button>
+  onClick={async () => {
+    try {
+      console.log("Logging out...");
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/logout`,
+        {},
+        { withCredentials: true } // Important to clear the HttpOnly cookie
+      );
+      router.replace('/admin/adminLogin');
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  }}
+  className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded"
+>
+  Logout
+</button>
       </aside>
       <main className="flex-1 p-4">{children}</main>
     </div>

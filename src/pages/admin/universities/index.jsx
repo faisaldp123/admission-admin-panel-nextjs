@@ -21,31 +21,31 @@ import axios from 'axios';
 
 
 
-export const getServerSideProps = async (ctx) => {
-  const cookie = ctx.req.headers.cookie || '';
+// export const getServerSideProps = async (ctx) => {
+//   const cookie = ctx.req.headers.cookie || '';
 
-  try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-admin-session`, {
-      headers: {
-        Cookie: cookie, // ✅ send cookie manually
-      },
-      withCredentials: true, // ✅ needed to support auth cookies
-    });
+//   try {
+//     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-admin-session`, {
+//       headers: {
+//         Cookie: cookie, // ✅ send cookie manually
+//       },
+//       withCredentials: true, // ✅ needed to support auth cookies
+//     });
 
-    if (res.status === 200 && res.data.success) {
-      return { props: {} };
-    }
-  } catch (error) {
-    console.error('Auth failed:', error.response?.data || error.message);
-  }
+//     if (res.status === 200 && res.data.success) {
+//       return { props: {} };
+//     }
+//   } catch (error) {
+//     console.error('Auth failed:', error.response?.data || error.message);
+//   }
 
-  return {
-    redirect: {
-      destination: '/admin/adminLogin',
-      permanent: false,
-    },
-  };
-};
+//   return {
+//     redirect: {
+//       destination: '/admin/adminLogin',
+//       permanent: false,
+//     },
+//   };
+// };
 
 const Universities = () => {
   console.log('university page loading..')
