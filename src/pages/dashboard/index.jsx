@@ -1,3 +1,4 @@
+import AdminLayout from "@/components/AdminLayout";
 import {
 
   FormControl,
@@ -30,7 +31,8 @@ export default function Dashboard() {
   ])
 
   return (
-    <div className="h-screen">
+    <AdminLayout>
+      <div className="h-screen">
    
      
         
@@ -61,5 +63,6 @@ export default function Dashboard() {
       </div>
 
     </div>
+    </AdminLayout>
   );
 }
