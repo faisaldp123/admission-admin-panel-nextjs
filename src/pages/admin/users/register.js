@@ -29,7 +29,7 @@ const Login = () => {
       if (response.token) {
         Cookies.set("access_token", response.token, { expires: 7 });
         Cookies.set("role", response.role || 'admin', { expires: 7 });
-        router.push("/"); // Redirect to Admin Dashboard
+        router.push("/admin/users"); // Redirect to Admin Dashboard
       }
     } catch (error) {
       displayNotification({ type: 'error', message: error.message || 'Invalid Credentials' });

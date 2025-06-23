@@ -11,6 +11,7 @@ import {
   Button,
   Modal,
   Box,
+  CircularProgress,
 } from '@mui/material';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
@@ -152,6 +153,11 @@ const Universities = () => {
       </div>
 
       <Card>
+        {isLoading ? (
+                  <div className="flex justify-center p-10">
+                    <CircularProgress />
+                  </div>
+                ) : ( 
         <TableContainer>
           <Table>
             <TableHead>
@@ -206,6 +212,7 @@ const Universities = () => {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </TableContainer>
+                )}
       </Card>
 
       <Modal open={modal} onClose={handleCloseModal}>
