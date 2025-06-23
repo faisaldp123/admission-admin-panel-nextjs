@@ -19,7 +19,7 @@ export default function AdminLoginPage() {
 
       if (apiRessponse.data.success) {
         console.log('pushing to universites page')
-        router.push('/admin/universities');
+        router.push('/admin/dashboard');
       } else {
         setError('Invalid credentials');
       }
