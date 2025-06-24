@@ -41,7 +41,7 @@ export default function AddUniversityForm() {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       alert('University added successfully!');
-      router.push('/universities');
+      router.push('/admin/universities');
     } catch (err) {
       console.error(err);
       alert('Failed to add university');
