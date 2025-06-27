@@ -7,6 +7,7 @@ import { store } from '@/store/store';
 import NextNProgress from 'nextjs-progressbar';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers';
+import 'react-quill/dist/quill.snow.css';
 import { AdminAuthProvider } from '@/context/AdminAuthContext'; // ✅ Import context
 
 function MyApp({ Component, pageProps, router }) {
