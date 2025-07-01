@@ -51,6 +51,7 @@ export default function SpecializationsPage() {
             <tr>
               <th className="p-2 border">Name</th>
               <th className="p-2 border">University</th>
+              <th className="p-2 border">Course</th>
             </tr>
           </thead>
           <tbody>
@@ -58,6 +59,7 @@ export default function SpecializationsPage() {
               <tr key={spec._id}>
                 <td className="p-2 border">{spec.name}</td>
                 <td className="p-2 border">{spec.university?.name || 'N/A'}</td>
+                <td className="p-2 border">{spec.course?.name || 'N/A'}</td>
               </tr>
             ))}
           </tbody>
