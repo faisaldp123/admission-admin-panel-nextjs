@@ -19,7 +19,7 @@ export default function AddSpecializationForm() {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/courses`);
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/course`);
       setCourses(res.data || []);
     } catch (err) {
       console.error("Failed to fetch courses");
