@@ -56,24 +56,28 @@ export default function AddOrUpdateSpecializationForm() {
       const data = res.data;
 
       reset({
-        name: data.name || '',
-        courseId: data.course?._id || data.course || '',
-        universityId: data.university?._id || data.university || '',
-        image1: data.image1 || '',
-        image2: data.image2 || '',
-        image3: data.image3 || '',
-        contentHtml: data.contentHtml || '',
-        metaTitle: data.metaTitle || '',
-        metaDescription: data.metaDescription || '',
-        canonicalUrl: data.canonicalUrl || '',
-        ogTitle: data.ogTitle || '',
-        ogDescription: data.ogDescription || '',
-        ogImage: data.ogImage || '',
-        twitterCard: data.twitterCard || '',
-        twitterTitle: data.twitterTitle || '',
-        twitterDescription: data.twitterDescription || '',
-        twitterImage: data.twitterImage || ''
-      });
+  name: data?.name ?? '',
+  courseId: data?.course?._id ?? data?.course ?? '',
+  universityId: data?.university?._id ?? data?.university ?? '',
+  image1: data?.image1 ?? '',
+  image2: data?.image2 ?? '',
+  image3: data?.image3 ?? '',
+  contentHtml: data?.contentHtml ?? '',
+
+  // SEO Fields (updated)
+  metaTitle: data?.metaTitle ?? '',
+  metaDescription: data?.metaDescription ?? '',
+  canonicalUrl: data?.canonicalUrl ?? '',
+
+  ogTitle: data?.ogTitle ?? '',
+  ogDescription: data?.ogDescription ?? '',
+  ogImage: data?.ogImage ?? '',
+
+  twitterCard: data?.twitterCard ?? '',
+  twitterTitle: data?.twitterTitle ?? '',
+  twitterDescription: data?.twitterDescription ?? '',
+  twitterImage: data?.twitterImage ?? ''
+});
 
       setIsReady(true);
     } catch (err) {
