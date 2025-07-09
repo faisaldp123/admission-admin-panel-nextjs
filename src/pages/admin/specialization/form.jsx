@@ -96,7 +96,7 @@ export default function AddOrUpdateSpecializationForm() {
         alert('Specialization added successfully!');
       }
 
-      router.push(`/admin/specialization?courseId=${data.courseId}`);
+      router.push(`/admin/specialization`);
     } catch (err) {
       console.error('❌ Save failed:', err.message);
       alert('Failed to save specialization.');
